@@ -23,7 +23,7 @@ export class UsersService {
         return response;
     }
 
-    async update(user_id: User["user_id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
+    async updateUser(user_id: User["user_id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
         const updated = await this.userRepository.update(user_id, {
             username: username,
             email_adress: email_adress,
@@ -31,6 +31,15 @@ export class UsersService {
         });
 
         const updatedPost = await this.userRepository.findOneBy({ user_id });
-        updatedPost && return updatedPost;
+        return !!updatedPost;
+
+        throw new NotFoundException(`${user_id}に一致するデータが見つかりませんでした`);
+    }
+
+    async removeUser(user_id: User["user_id"]) {
+        const response = await this.userRepository.delete(user_id);
+
+        if(!response.affected) throw new NotFoundException(`${user_id}に一致するデータが見つかりませんでした`);
+        return response;
     }
 }
