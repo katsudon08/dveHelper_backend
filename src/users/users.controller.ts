@@ -10,4 +10,6 @@ export class UsersController {
     create(@Body() user: User) {
         return this.usersService.createUser(user);
     }
+
+    // 残りのCRUD操作のコントロールの実装
 }
