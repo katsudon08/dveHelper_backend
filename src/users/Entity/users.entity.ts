@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 // typeORMのドキュメントの確認
 @Entity()
-export class User {
+export class UserEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
