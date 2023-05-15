@@ -17,29 +17,29 @@ export class UsersService {
         return await this.userRepository.find();
     }
 
-    async finduser(user_id: User["user_id"]) {
-        const response = await this.userRepository.findOneBy({ user_id });
-        if (!response) throw new NotFoundException(`${user_id}に一致するデータが見つかりませんでした`);
+    async finduser(id: User["id"]) {
+        const response = await this.userRepository.findOneBy({ id });
+        if (!response) throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
         return response;
     }
 
-    async updateUser(user_id: User["user_id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
-        const updated = await this.userRepository.update(user_id, {
+    async updateUser(id: User["id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
+        const updated = await this.userRepository.update(id, {
             username: username,
             email_adress: email_adress,
             password: password
         });
 
-        const updatedPost = await this.userRepository.findOneBy({ user_id });
+        const updatedPost = await this.userRepository.findOneBy({ id });
         return !!updatedPost;
 
-        throw new NotFoundException(`${user_id}に一致するデータが見つかりませんでした`);
+        throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
     }
 
-    async removeUser(user_id: User["user_id"]) {
-        const response = await this.userRepository.delete(user_id);
+    async removeUser(id: User["id"]) {
+        const response = await this.userRepository.delete(id);
 
-        if(!response.affected) throw new NotFoundException(`${user_id}に一致するデータが見つかりませんでした`);
+        if(!response.affected) throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
         return response;
     }
 }

@@ -4,11 +4,8 @@ import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class UserEntity {
     // !は割り当てアサーションの記法
-    @PrimaryGeneratedColumn()
-    id!: number;
-
-    @Column()
-    user_id!: string;
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;
 
     @Column()
     username!: string;
