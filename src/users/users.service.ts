@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Id } from './interface/id.interface';
 import { User } from './interface/users.interface';
 import { DeleteResult } from "typeorm";
 import { UserEntity } from './Entity/users.entity';
@@ -17,13 +18,13 @@ export class UsersService {
         return await this.userRepository.find();
     }
 
-    async finduser(id: User["id"]) {
+    async finduser(id: Id["id"]) {
         const response = await this.userRepository.findOneBy({ id });
         if (!response) throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
         return response;
     }
 
-    async updateUser(id: User["id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
+    async updateUser(id: Id["id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
         const updated = await this.userRepository.update(id, {
             username: username,
             email_adress: email_adress,
@@ -36,7 +37,7 @@ export class UsersService {
         throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
     }
 
-    async removeUser(id: User["id"]) {
+    async removeUser(id: Id["id"]) {
         const response = await this.userRepository.delete(id);
 
         if(!response.affected) throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
