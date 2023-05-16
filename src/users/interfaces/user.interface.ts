@@ -1,5 +1,4 @@
-// クラスバリデーター
-export class CreateUserDto {
+export interface User {
     username: string;
     email_adress: string;
     password: string;

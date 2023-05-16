@@ -1,7 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from './interface/user.interface';
-import { CreateUserDto } from './dto/create-user.dto';
-import { DeleteResult } from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { User } from './interfaces/user.interface';
 import { UserEntity } from './Entity/users.entity';
 import { UserRepository } from "./repository/users.repository";
 
@@ -9,11 +7,18 @@ import { UserRepository } from "./repository/users.repository";
 export class UsersService {
     constructor(private readonly userRepository: UserRepository) { }
 
-    async createUser(user: CreateUserDto) {
+    async createUser(user: UserEntity) {
         return await this.userRepository.save(user);
     }
 
     async findAllUser() {
         return await this.userRepository.find();
+    }
+
+    async findOne(username: User['username'], password: User['password']) {
+        return await this.userRepository.findBy({
+            username: username,
+            password: password
+        });
     }
 }

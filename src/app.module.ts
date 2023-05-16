@@ -7,7 +7,7 @@ import { UserEntity } from './users/Entity/users.entity';
 
 @Module({
   // 後にドキュメントで確認する
-  imports: [UsersModule, TypeOrmModule.forRoot({
+  imports: [TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
     port: 3306,
@@ -15,8 +15,9 @@ import { UserEntity } from './users/Entity/users.entity';
     password: 'akihiko171101',
     database: 'dev_helper',
     entities: [UserEntity],
-    synchronize: true
-  })],
+    // カラムが重なるエラー発生のため、同期を切る必要あり
+    synchronize: false
+  }), UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
