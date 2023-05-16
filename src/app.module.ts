@@ -15,8 +15,8 @@ import { UserEntity } from './users/Entity/users.entity';
     password: 'akihiko171101',
     database: 'dev_helper',
     entities: [UserEntity],
-    // カラムが重なるエラー発生のため、同期を切る必要あり
-    synchronize: false
+    // 本番環境では、同期を切る必要あり
+    synchronize: true
   }), UsersModule],
   controllers: [AppController],
   providers: [AppService],
