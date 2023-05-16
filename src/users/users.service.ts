@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Id } from './interface/id.interface';
-import { User } from './interface/users.interface';
+import { User } from './interface/user.interface';
+import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteResult } from "typeorm";
 import { UserEntity } from './Entity/users.entity';
 import { UserRepository } from "./repository/users.repository";
@@ -9,7 +9,7 @@ import { UserRepository } from "./repository/users.repository";
 export class UsersService {
     constructor(private readonly userRepository: UserRepository) { }
 
-    async createUser(user: User) {
+    async createUser(user: CreateUserDto) {
         return await this.userRepository.save(user);
     }
 
@@ -18,13 +18,13 @@ export class UsersService {
         return await this.userRepository.find();
     }
 
-    async finduser(id: Id["id"]) {
+    async findUser(id: User["id"]) {
         const response = await this.userRepository.findOneBy({ id });
         if (!response) throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
         return response;
     }
 
-    async updateUser(id: Id["id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
+    async updateUser(id: User["id"], username?: User["username"], email_adress?: User["email_adress"], password?: User["password"]) {
         const updated = await this.userRepository.update(id, {
             username: username,
             email_adress: email_adress,
@@ -37,7 +37,7 @@ export class UsersService {
         throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
     }
 
-    async removeUser(id: Id["id"]) {
+    async deleteUser(id: User["id"]) {
         const response = await this.userRepository.delete(id);
 
         if(!response.affected) throw new NotFoundException(`${id}に一致するデータが見つかりませんでした`);
