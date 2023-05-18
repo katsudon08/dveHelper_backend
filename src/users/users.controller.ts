@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserEntity } from './Entity/users.entity';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { FindUserDTO } from './dto/find-user.dto';
 
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Post()
-    createUser(@Body() user: UserEntity) {
+    createUser(@Body() user: CreateUserDTO) {
         return this.usersService.createUser(user);
     }
 
@@ -16,9 +17,10 @@ export class UsersController {
         return this.usersService.findAllUser();
     }
 
+    // ログイン時の情報をメアドとパスワードにする予定
     @Get('find')
-    findOne(@Body() user: UserEntity) {
-        return this.usersService.findOne(user.username, user.password);
+    findUser(@Body() user: FindUserDTO) {
+        return this.usersService.findUser(user.email_adress, user.password);
     }
 
 }

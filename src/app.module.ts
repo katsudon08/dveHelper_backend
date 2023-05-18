@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './users/Entity/users.entity';
+import { UserEntity } from './users/entities/user.entity';
 
 @Module({
   // 後にドキュメントで確認する

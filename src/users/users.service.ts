@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './interfaces/user.interface';
-import { UserEntity } from './Entity/users.entity';
 import { UserRepository } from "./repository/users.repository";
+import { UserEntity } from "./entities/user.entity";
+import { CreateUserDTO } from "./dto/create-user.dto";
+import { FindUserDTO } from './dto/find-user.dto';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly userRepository: UserRepository) { }
 
-    async createUser(user: UserEntity) {
+    async createUser(user: CreateUserDTO): Promise<UserEntity> {
         return await this.userRepository.save(user);
     }
 
@@ -15,9 +16,10 @@ export class UsersService {
         return await this.userRepository.find();
     }
 
-    async findOne(username: User['username'], password: User['password']) {
+    async findUser(email_adress: FindUserDTO["email_adress"], password: FindUserDTO['password']) {
+        // エラーのバンドリングをする必要がある
         return await this.userRepository.findBy({
-            username: username,
+            email_adress: email_adress,
             password: password
         });
     }
